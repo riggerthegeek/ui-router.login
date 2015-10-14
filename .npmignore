@@ -1,0 +1,6 @@
+Gruntfile.js
+coverage
+test
+.*
+*.png
+bower.json

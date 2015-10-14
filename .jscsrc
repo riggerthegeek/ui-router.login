@@ -1,0 +1,32 @@
+{
+  "requireSpaceAfterKeywords": [
+    "if",
+    "else",
+    "for",
+    "while",
+    "do",
+    "switch",
+    "return",
+    "try",
+    "catch",
+    "finally"
+  ],
+  "requireCurlyBraces": [
+    "if",
+    "else",
+    "for",
+    "while",
+    "do",
+    "try",
+    "catch",
+    "case",
+    "default"
+  ],
+  "requireSpaceBeforeBlockStatements": true,
+  "requireSpacesInConditionalExpression": true,
+  "requireSpacesInFunctionExpression": {
+    "beforeOpeningRoundBrace": true,
+    "beforeOpeningCurlyBrace": true
+  },
+  "validateIndentation": 4
+}
