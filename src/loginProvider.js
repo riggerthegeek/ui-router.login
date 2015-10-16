@@ -43,14 +43,12 @@ export default function () {
          *
          * @param {object} $authentication
          * @param {object} ipCookie
-         * @param {object} $log
          * @param {object} $state
          */
-        constructor ($authentication, ipCookie, $log, $state) {
+        constructor ($authentication, ipCookie, $state) {
 
             this._$authentication = $authentication;
             this._ipCookie = ipCookie;
-            this._$log = $log;
             this._$state = $state;
 
         }
@@ -106,6 +104,27 @@ export default function () {
          */
         getLoginRedirect () {
 
+            let cookie = this._ipCookie(cookieName);
+            if (_.isPlainObject(cookie) === false) {
+                /* Something has gone wrong */
+                cookie = {};
+            }
+
+            let state = cookie.state;
+            let params = cookie.params;
+
+            if (_.isPlainObject(params) === false) {
+                params = {};
+            }
+
+            if (!state) {
+                /* No redirect information - go to default page */
+                state = defaultLoggedInState;
+            }
+
+            /* Perform the redirect */
+            return this._$state.go(state, params);
+
         }
 
 
@@ -141,6 +160,25 @@ export default function () {
          * @returns {*}
          */
         logout (redirectState = null) {
+
+            /* Clear the auth key */
+            try {
+                this._$authentication[authClearMethod]();
+            } catch (err) {
+                /* Throw the error with the correct module and method names */
+                throw new Error(authModule + "." + authClearMethod + "() is not a function");
+            }
+
+            if (redirectState === true) {
+                /* Go to fallback state */
+                return this._$state.go(fallbackState);
+            } else if (_.isString(redirectState)) {
+                /* Go to specific state */
+                return this._$state.go(redirectState);
+            } else {
+                /* Reload the page */
+                return this._$state.reload();
+            }
 
         }
 
@@ -278,9 +316,8 @@ export default function () {
     this.$get = [
         authModule,
         "ipCookie",
-        "$log",
         "$state",
-        ($authentication, ipCookie, $log, $state) => {
+        ($authentication, ipCookie, $state) => {
 
             if (_.isNull(defaultLoggedInState)) {
                 throw new Error("loginProvider.defaultLoggedInState must be set");
@@ -290,7 +327,11 @@ export default function () {
                 throw new Error("loginProvider.fallbackState must be set");
             }
 
-            return new Login($authentication, ipCookie, $log, $state);
+            return new Login(
+                $authentication,
+                ipCookie,
+                $state
+            );
 
         }];
 

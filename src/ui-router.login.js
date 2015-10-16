@@ -20,10 +20,10 @@ var app = angular.module("ui.router.login", [
 ])
 
     /* Providers */
-    .provider("$login", require("./providers/login"))
+    .provider("$login", require("./loginProvider"))
 
     /* Run */
-    .run(require("./config/run"));
+    .run(require("./run"));
 
 
 module.exports = app;

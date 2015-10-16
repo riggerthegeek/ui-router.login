@@ -32,7 +32,23 @@
                                     template: "login",
                                     controllerAs: "vm"
                                 }
-                            }
+                            },
+                            children: [{
+                                name: "process",
+                                url: "/process",
+                                views: {
+                                    "content@": {
+                                        template: "hello",
+                                        controller: function ($authentication, $login) {
+                                            /* Hardcode a login key */
+                                            $authentication.setAuthKey("key");
+
+                                            /* Do the login redirect */
+                                            $login.getLoginRedirect();
+                                        }
+                                    }
+                                }
+                            }]
                         }]
                     }, {
                         /* Any pages that require login live under here */
@@ -42,6 +58,19 @@
                             requireLogin: true
                         },
                         children: [{
+                            name: "logout",
+                            url: "logout",
+                            data: {
+                                saveState: false
+                            },
+                            views: {
+                                "content@": {
+                                    controller: function ($login) {
+                                        return $login.logout(true);
+                                    }
+                                }
+                            }
+                        }, {
                             name: "home",
                             url: "",
                             views: {
@@ -62,17 +91,34 @@
             $loginProvider.setAuthModule("$authentication")
                 .setAuthClearMethod("clearAuthKey")
                 .setAuthGetMethod("getAuthKey")
+                .setCookieName("__loginState")
                 .setDefaultLoggedInState ("app.private.home")
                 .setFallbackState("app.public.login");
 
         })
-        .factory("$authentication", function () {
+        .factory("$authentication", function (ipCookie) {
+
+            var cookieName = "authCookie";
 
             return {
 
+                clearAuthKey: function () {
+                    return ipCookie.remove(cookieName, {
+                        path: "/"
+                    });
+                },
+
                 getAuthKey: function () {
 
-                    return null;
+                    return !!ipCookie(cookieName);
+
+                },
+
+                setAuthKey: function (key) {
+
+                    ipCookie(cookieName, key, {
+                        path: "/"
+                    });
 
                 }
 
