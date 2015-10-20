@@ -153,9 +153,19 @@ module.exports = function (grunt) {
             }
         },
         karma: {
+            options: {
+                configFile: "./<%= config.test %>/karma.conf.js"
+            },
+            phantomjs: {
+                browsers: [
+                    "PhantomJS"
+                ]
+            },
             src: {
-                configFile: "./<%= config.test %>/karma.conf.js",
-                singleRun: true
+                browsers: [
+                    "PhantomJS",
+                    "Firefox"
+                ]
             }
         },
         ngAnnotate: {
