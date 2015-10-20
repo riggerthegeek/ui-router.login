@@ -254,6 +254,14 @@ export default function () {
     };
 
 
+    /**
+     * Set Cookie Name
+     *
+     * Sets the cookie name
+     *
+     * @param {string} name
+     * @returns {*}
+     */
     this.setCookieName = (name) => {
 
         if (_.isString(name)) {
