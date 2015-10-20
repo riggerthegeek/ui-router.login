@@ -85,10 +85,10 @@ export default function () {
                         path: "/"
                     });
 
-                    /* Now, send to the fallback state */
-                    return this._$state.go(fallbackState);
-
                 }
+
+                /* Now, send to the fallback state */
+                return this._$state.go(fallbackState);
 
             }
 
