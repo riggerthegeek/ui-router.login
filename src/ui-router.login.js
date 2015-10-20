@@ -16,7 +16,8 @@ import "../bower_components/angular-cookie/angular-cookie";
 
 
 var app = angular.module("ui.router.login", [
-    "ipCookie"
+    "ipCookie",
+    "ui.router"
 ])
 
     /* Providers */
