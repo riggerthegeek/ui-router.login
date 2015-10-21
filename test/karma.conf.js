@@ -21,6 +21,8 @@ module.exports = function (karma) {
 
         autoWatch: false,
 
+        basePath: "../",
+
         browserify: {
             debug: true,
             transform: [
@@ -34,10 +36,10 @@ module.exports = function (karma) {
         ],
 
         files: [
-            "../node_modules/angular/angular.js",
-            "../src/ui-router.login.js",
-            "../node_modules/angular-mocks/angular-mocks.js",
-            "unit/**/*.js"
+            "node_modules/angular/angular.js",
+            "src/ui-router.login.js",
+            "node_modules/angular-mocks/angular-mocks.js",
+            "test/unit/**/*.js"
         ],
 
         frameworks: [
@@ -48,10 +50,10 @@ module.exports = function (karma) {
         ],
 
         preprocessors: {
-            "../src/ui-router.login.js": [
+            "src/ui-router.login.js": [
                 "browserify"
             ],
-            "unit/**/*.js": [
+            "test/unit/**/*.js": [
                 "browserify"
             ]
         },
