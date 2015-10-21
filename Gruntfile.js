@@ -157,9 +157,11 @@ module.exports = function (grunt) {
                 configFile: "./<%= config.test %>/karma.conf.js"
             },
             phantomjs: {
+                autoWatch: true,
                 browsers: [
                     "PhantomJS"
-                ]
+                ],
+                singleRun: false
             },
             src: {
                 browsers: [
