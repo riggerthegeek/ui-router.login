@@ -10,6 +10,7 @@
 
 /* Third-party modules */
 import "angular-ui-router";
+import {_} from "lodash";
 
 
 /* Files */
@@ -18,11 +19,16 @@ import "angular-ui-router";
 describe("provider: $loginProvider", function () {
 
     let $login,
+        $loginProvider,
         authFactory,
         ipCookie,
         stateFactory;
 
-    let init = () => {
+    let init = (fn) => {
+
+        if (_.isFunction(fn)) {
+            angular.mock.module(fn);
+        }
 
         angular.mock.inject((_$login_) => {
             $login = _$login_;
@@ -32,7 +38,15 @@ describe("provider: $loginProvider", function () {
 
     beforeEach(angular.mock.module("ui.router.login"));
 
-    describe("default settings", () => {
+    beforeEach(() => {
+
+        angular.mock.module((_$loginProvider_) => {
+            $loginProvider = _$loginProvider_;
+        });
+
+    });
+
+    describe("methods", () => {
 
         beforeEach(() => {
 
@@ -46,7 +60,7 @@ describe("provider: $loginProvider", function () {
                 reload: sinon.stub()
             };
 
-            angular.mock.module(($provide, $loginProvider) => {
+            angular.mock.module(($provide) => {
 
                 $provide.factory("$authentication", () => {
                     return authFactory;
@@ -122,6 +136,91 @@ describe("provider: $loginProvider", function () {
                     .calledWithExactly("app.fallback");
 
                 expect(ipCookie).to.not.be.called;
+
+            });
+
+        });
+
+        describe("#getLoginRedirect", () => {
+
+            it("should call a specified cookie", () => {
+
+                init(() => {
+
+                    expect($loginProvider.setCookieName("mycookie")).to.be.equal($loginProvider);
+
+                });
+
+                stateFactory.go.returns("promise");
+                ipCookie.returns(undefined);
+
+                expect($login.getLoginRedirect()).to.be.equal("promise");
+
+                expect(ipCookie).to.be.calledOnce
+                    .calledWithExactly("mycookie");
+
+                expect(stateFactory.go).to.be.calledOnce
+                    .calledWithExactly("app.loggedin", {});
+
+            });
+
+            it("should redirect to the default state when nothing in the cookie", () => {
+
+                init();
+
+                stateFactory.go.returns("promise");
+                ipCookie.returns(undefined);
+
+                expect($login.getLoginRedirect()).to.be.equal("promise");
+
+                expect(ipCookie).to.be.calledOnce
+                    .calledWithExactly("__loginData");
+
+                expect(stateFactory.go).to.be.calledOnce
+                    .calledWithExactly("app.loggedin", {});
+
+            });
+
+            it("should redirect to the state set in the cookie with no params", () => {
+
+                init();
+
+                stateFactory.go.returns("promise");
+                ipCookie.returns({
+                    state: "app.state"
+                });
+
+                expect($login.getLoginRedirect()).to.be.equal("promise");
+
+                expect(ipCookie).to.be.calledOnce
+                    .calledWithExactly("__loginData");
+
+                expect(stateFactory.go).to.be.calledOnce
+                    .calledWithExactly("app.state", {});
+
+            });
+
+            it("should redirect to the state set in the cookie with some params", () => {
+
+                init();
+
+                stateFactory.go.returns("promise");
+                ipCookie.returns({
+                    state: "app.state",
+                    params: {
+                        hello: "world"
+                    }
+                });
+
+                expect($login.getLoginRedirect()).to.be.equal("promise");
+
+                expect(ipCookie).to.be.calledOnce
+                    .calledWithExactly("__loginData");
+
+                expect(stateFactory.go).to.be.calledOnce
+                    .calledWithExactly("app.state", {
+                        hello: "world"
+                    });
 
             });
 
