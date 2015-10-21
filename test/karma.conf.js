@@ -24,8 +24,7 @@ module.exports = function (karma) {
         browserify: {
             debug: true,
             transform: [
-                "babelify",
-                "brfs"
+                "babelify"
             ]
         },
 
