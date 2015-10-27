@@ -9,10 +9,10 @@
 
 
 /* Third-party modules */
+import "angular-cookie";
 
 
 /* Files */
-import "../bower_components/angular-cookie/angular-cookie";
 
 
 var app = angular.module("ui.router.login", [
