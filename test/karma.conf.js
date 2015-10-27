@@ -6,7 +6,6 @@
 
 
 /* Node modules */
-var os = require("os");
 
 
 /* Third-party modules */
