@@ -341,7 +341,8 @@ export default function () {
                 $state
             );
 
-        }];
+        }
+    ];
 
 
 }
