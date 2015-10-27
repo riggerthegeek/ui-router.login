@@ -13,7 +13,7 @@
             "ui.router.login",
             "ui.router.stateHelper"
         ])
-        .config(function (stateHelperProvider, $urlRouterProvider) {
+        .config(["stateHelperProvider", "$urlRouterProvider", function (stateHelperProvider, $urlRouterProvider) {
 
             stateHelperProvider
                 .state({
@@ -85,8 +85,8 @@
 
             $urlRouterProvider.otherwise("/");
 
-        })
-        .config(function ($loginProvider) {
+        }])
+        .config(["$loginProvider", function ($loginProvider) {
 
             $loginProvider.setAuthModule("$authentication")
                 .setAuthClearMethod("clearAuthKey")
@@ -95,8 +95,8 @@
                 .setDefaultLoggedInState ("app.private.home")
                 .setFallbackState("app.public.login");
 
-        })
-        .factory("$authentication", function (ipCookie) {
+        }])
+        .factory("$authentication", ["ipCookie", function (ipCookie) {
 
             var cookieName = "authCookie";
 
@@ -124,6 +124,6 @@
 
             };
 
-        });
+        }]);
 
 })();
