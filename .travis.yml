@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-- 'stable'
+- stable
 matrix:
   fast_finish: true
 sudo: false
@@ -16,6 +16,8 @@ deploy:
   provider: npm
   email: simon@simonemms.com
   skip_cleanup: true
+  api_key:
+    secure: IlpjlNRActOSj63LFsf3ngMSOSIPH2MlWfc3ukg7iomSSd60ybPHBdNBEG+eKfikjUDGLFXwszQYTFW9Y2Q+O5upqkE1ukLSaeWTZMdCtscH0PQtOj6jnKNxiyesR6hGsVeVf4vyYjR8Q+X1+rycBrwukochE/vjSA+oKiiKqKmOoeNLinevKksp2IYNIEqkxbpGSrsQ0ryNpYtsx1rJwWjMY3JsLtW0hQnBd3u88uLagqiFui8UNDRAc9B6LYVZ+cVsPmmHEiQFXbmafarijUcB+uioQq3xU0iNwXLy5r469zn3Hbqjiy0LLEvL7aUDBncsIdwu+2jl7hBrs6EdT3HZzsau6DILcSnIT01QGU2c8XxDgfLaBybSGruuHNOD3roMvOnlIXOk+b797miGlG7lQ/KD2+UCYQX4cHfigmx+ym1jTkG9RHldSgdMiL40g2Z6Yqapl96RI59P5gkYgmbnl+NIQDTYjOAX6wmJsplje1blEfg9u835y6lom2arJsVX+9m/cmMfcRVKtWDqHcQ2nd4i9GGUE1II9crMNwNtWBdx34V1Hp2h797ZOQqSEoBZJJcZwpHdHZg80uA3i4q2g0y3aIUmTblE6bJ7GqyPghlHU5kyIo2cY8ha5naWUeQVjEah8MOlra0wiDL1yXfJavS32IzkyOH/OmYQcI4=
   on:
     all_branches: true
     tags: true
