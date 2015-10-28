@@ -59,7 +59,10 @@ module.exports = function (grunt) {
         browserify: {
             src: {
                 options: {
-                    banner: "<%= banner %>"
+                    banner: "<%= banner %>",
+                    plugin: [
+                        "browserify-derequire"
+                    ]
                 },
                 files: {
                     "./<%= config.build %>/<%= config.app %>.js": [
