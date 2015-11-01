@@ -62,6 +62,10 @@ module.exports = function (grunt) {
                     banner: "<%= banner %>",
                     plugin: [
                         "browserify-derequire"
+                    ],
+                    transform: [
+                        "babelify",
+                        "debowerify"
                     ]
                 },
                 files: {
