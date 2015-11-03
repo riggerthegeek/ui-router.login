@@ -2,116 +2,33 @@
  * ui-router.login
  *
  * @author Simon Emms <simon@simonemms.com>
- * @build 2015-10-28T09:24:14
+ * @build 2015-11-03T07:42:01
  * @description A module which simplifies the login process to an Angular project that uses ui-router
  * @license MIT
  */
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
-/*
- * Copyright 2013 Ivan Pusic
- * Contributors:
- *   Matjaz Lipus
- */
-'use strict';
+"use strict";
 
-angular.module('ivpusic.cookie', ['ipCookie']);
-angular.module('ipCookie', ['ng']).factory('ipCookie', ['$document', function ($document) {
-  'use strict';
-
-  function tryDecodeURIComponent(value) {
+angular.module("ivpusic.cookie", ["ipCookie"]), angular.module("ipCookie", ["ng"]).factory("ipCookie", ["$document", function (e) {
+  "use strict";function i(e) {
     try {
-      return decodeURIComponent(value);
-    } catch (e) {
-      // Ignore any invalid uri component
-    }
-  }
-
-  return (function () {
-    function cookieFun(key, value, options) {
-
-      var cookies, list, i, cookie, pos, name, hasCookies, all, expiresFor;
-
-      options = options || {};
-      var dec = options.decode || tryDecodeURIComponent;
-      var enc = options.encode || encodeURIComponent;
-
-      if (value !== undefined) {
-        // we are setting value
-        value = typeof value === 'object' ? JSON.stringify(value) : String(value);
-
-        if (typeof options.expires === 'number') {
-          expiresFor = options.expires;
-          options.expires = new Date();
-          // Trying to delete a cookie; set a date far in the past
-          if (expiresFor === -1) {
-            options.expires = new Date('Thu, 01 Jan 1970 00:00:00 GMT');
-            // A new
-          } else if (options.expirationUnit !== undefined) {
-              if (options.expirationUnit === 'hours') {
-                options.expires.setHours(options.expires.getHours() + expiresFor);
-              } else if (options.expirationUnit === 'minutes') {
-                options.expires.setMinutes(options.expires.getMinutes() + expiresFor);
-              } else if (options.expirationUnit === 'seconds') {
-                options.expires.setSeconds(options.expires.getSeconds() + expiresFor);
-              } else if (options.expirationUnit === 'milliseconds') {
-                options.expires.setMilliseconds(options.expires.getMilliseconds() + expiresFor);
-              } else {
-                options.expires.setDate(options.expires.getDate() + expiresFor);
-              }
-            } else {
-              options.expires.setDate(options.expires.getDate() + expiresFor);
-            }
+      return decodeURIComponent(e);
+    } catch (i) {}
+  }return (function () {
+    function t(t, n, r) {
+      var o, s, p, u, a, c, d, x, f;r = r || {};var g = r.decode || i,
+          l = r.encode || encodeURIComponent;if (void 0 !== n) return n = "object" == typeof n ? JSON.stringify(n) : n + "", "number" == typeof r.expires && (f = r.expires, r.expires = new Date(), -1 === f ? r.expires = new Date("Thu, 01 Jan 1970 00:00:00 GMT") : void 0 !== r.expirationUnit ? "hours" === r.expirationUnit ? r.expires.setHours(r.expires.getHours() + f) : "minutes" === r.expirationUnit ? r.expires.setMinutes(r.expires.getMinutes() + f) : "seconds" === r.expirationUnit ? r.expires.setSeconds(r.expires.getSeconds() + f) : "milliseconds" === r.expirationUnit ? r.expires.setMilliseconds(r.expires.getMilliseconds() + f) : r.expires.setDate(r.expires.getDate() + f) : r.expires.setDate(r.expires.getDate() + f)), e[0].cookie = [l(t), "=", l(n), r.expires ? "; expires=" + r.expires.toUTCString() : "", r.path ? "; path=" + r.path : "", r.domain ? "; domain=" + r.domain : "", r.secure ? "; secure" : ""].join("");for (s = [], x = e[0].cookie, x && (s = x.split("; ")), o = {}, d = !1, p = 0; s.length > p; ++p) if (s[p]) {
+        if ((u = s[p], a = u.indexOf("="), c = u.substring(0, a), n = g(u.substring(a + 1)), angular.isUndefined(n))) continue;if (void 0 === t || t === c) {
+          try {
+            o[c] = JSON.parse(n);
+          } catch (m) {
+            o[c] = n;
+          }if (t === c) return o[c];d = !0;
         }
-        return $document[0].cookie = [enc(key), '=', enc(value), options.expires ? '; expires=' + options.expires.toUTCString() : '', options.path ? '; path=' + options.path : '', options.domain ? '; domain=' + options.domain : '', options.secure ? '; secure' : ''].join('');
-      }
-
-      list = [];
-      all = $document[0].cookie;
-      if (all) {
-        list = all.split('; ');
-      }
-
-      cookies = {};
-      hasCookies = false;
-
-      for (i = 0; i < list.length; ++i) {
-        if (list[i]) {
-          cookie = list[i];
-          pos = cookie.indexOf('=');
-          name = cookie.substring(0, pos);
-          value = dec(cookie.substring(pos + 1));
-          if (angular.isUndefined(value)) continue;
-
-          if (key === undefined || key === name) {
-            try {
-              cookies[name] = JSON.parse(value);
-            } catch (e) {
-              cookies[name] = value;
-            }
-            if (key === name) {
-              return cookies[name];
-            }
-            hasCookies = true;
-          }
-        }
-      }
-      if (hasCookies && key === undefined) {
-        return cookies;
-      }
-    }
-    cookieFun.remove = function (key, options) {
-      var hasCookie = cookieFun(key) !== undefined;
-
-      if (hasCookie) {
-        if (!options) {
-          options = {};
-        }
-        options.expires = -1;
-        cookieFun(key, '', options);
-      }
-      return hasCookie;
-    };
-    return cookieFun;
+      }return d && void 0 === t ? o : void 0;
+    }return t.remove = function (e, i) {
+      var n = void 0 !== t(e);return n && (i || (i = {}), i.expires = -1, t(e, "", i)), n;
+    }, t;
   })();
 }]);
 
@@ -12631,7 +12548,7 @@ exports["default"] = function () {
 
                 try {
                     /* Is the result true? */
-                    return this._$authentication[authGetMethod]() === true;
+                    return !!this._$authentication[authGetMethod]();
                 } catch (err) {
                     /* Throw the error with the correct module and method names */
                     throw new Error(authModule + "." + authGetMethod + "() is not a function");
@@ -12853,9 +12770,9 @@ module.exports = exports["default"];
 
 /* Third-party modules */
 
-_dereq_("./../bower_components/angular-cookie/angular-cookie.js");
-
 /* Files */
+
+_dereq_("../bower_components/angular-cookie/angular-cookie.min.js");
 
 var app = angular.module("ui.router.login", ["ipCookie", "ui.router"])
 
@@ -12867,4 +12784,4 @@ var app = angular.module("ui.router.login", ["ipCookie", "ui.router"])
 
 module.exports = app;
 
-},{"./../bower_components/angular-cookie/angular-cookie.js":1,"./loginProvider":3,"./run":4}]},{},[5]);
+},{"../bower_components/angular-cookie/angular-cookie.min.js":1,"./loginProvider":3,"./run":4}]},{},[5]);
