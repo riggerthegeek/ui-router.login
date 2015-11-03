@@ -113,7 +113,7 @@ This is the method in your authentication module that clears your authentication
 
 #### setAuthGetMethod (string: method = "getAuthKey")
 
-This is the method in your authentication module that retrieves your authentication key. If it returns a non-`true`
+This is the method in your authentication module that retrieves your authentication key. If it returns a falsey
 value, it assumes you're not authorised.
 
 #### setCookieName (string: name = "__loginState")

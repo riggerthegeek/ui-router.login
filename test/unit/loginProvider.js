@@ -248,11 +248,41 @@ describe("provider: $loginProvider", function () {
 
             });
 
-            it("should return truthy but not be logged in", () => {
+            it("should return truthy and be logged in", () => {
 
                 init();
 
                 authFactory.getAuthKey.returns(47);
+
+                expect($login.isLoggedIn()).to.be.true;
+
+            });
+
+            it("should return null and be logged out", () => {
+
+                init();
+
+                authFactory.getAuthKey.returns(null);
+
+                expect($login.isLoggedIn()).to.be.false;
+
+            });
+
+            it("should return 0 and be logged out", () => {
+
+                init();
+
+                authFactory.getAuthKey.returns(0);
+
+                expect($login.isLoggedIn()).to.be.false;
+
+            });
+
+            it("should return undefined and be logged out", () => {
+
+                init();
+
+                authFactory.getAuthKey.returns(void 0);
 
                 expect($login.isLoggedIn()).to.be.false;
 

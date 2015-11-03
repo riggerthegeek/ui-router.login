@@ -139,7 +139,7 @@ export default function () {
 
             try {
                 /* Is the result true? */
-                return this._$authentication[authGetMethod]() === true;
+                return !!this._$authentication[authGetMethod]();
             } catch (err) {
                 /* Throw the error with the correct module and method names */
                 throw new Error(authModule + "." + authGetMethod + "() is not a function");
