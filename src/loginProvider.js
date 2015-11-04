@@ -321,28 +321,29 @@ export default function () {
     };
 
 
-    this.$get = [
-        authModule,
-        "ipCookie",
-        "$state",
-        ($authentication, ipCookie, $state) => {
+    this.$get = ($injector, ipCookie, $state) => {
 
-            if (_.isNull(defaultLoggedInState)) {
-                throw new Error("loginProvider.defaultLoggedInState must be set");
-            }
+        "ngInject";
 
-            if (_.isNull(fallbackState)) {
-                throw new Error("loginProvider.fallbackState must be set");
-            }
-
-            return new Login(
-                $authentication,
-                ipCookie,
-                $state
-            );
-
+        if (_.isNull(defaultLoggedInState)) {
+            throw new Error("loginProvider.defaultLoggedInState must be set");
         }
-    ];
+
+        if (_.isNull(fallbackState)) {
+            throw new Error("loginProvider.fallbackState must be set");
+        }
+
+        /* Load the dynamic authentication module */
+        let $authentication = $injector.get(authModule);
+
+        /* Return instance of the class */
+        return new Login(
+            $authentication,
+            ipCookie,
+            $state
+        );
+
+    };
 
 
 }

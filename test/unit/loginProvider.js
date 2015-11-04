@@ -81,6 +81,46 @@ describe("provider: $loginProvider", function () {
 
         });
 
+        describe("custom authentication factory", () => {
+
+            it("should use a custom authentication factory", () => {
+
+                let customAuthFactory = {
+                    clear: sinon.stub(),
+                    get: sinon.stub()
+                };
+
+                init(($provide) => {
+
+                    expect($loginProvider.setAuthModule("authFactory")).to.be.equal($loginProvider);
+                    expect($loginProvider.setAuthClearMethod("clear")).to.be.equal($loginProvider);
+                    expect($loginProvider.setAuthGetMethod("get")).to.be.equal($loginProvider);
+
+                    $provide.factory("authFactory", () => {
+                        return customAuthFactory;
+                    });
+
+                });
+
+                customAuthFactory.get.returns(true);
+
+                expect($login.checkLoggedIn()).to.be.undefined;
+
+                expect(customAuthFactory.get).to.be.calledOnce
+                    .calledWithExactly();
+
+                expect($login.logout()).to.be.undefined;
+
+                expect(customAuthFactory.clear).to.be.calledOnce
+                    .calledWithExactly();
+
+                expect(authFactory.getAuthKey).to.not.be.called;
+                expect(authFactory.clearAuthKey).to.not.be.called;
+
+            });
+
+        });
+
         describe("#checkLoggedIn", () => {
 
             it("should do nothing if logged in", () => {
