@@ -2,7 +2,7 @@
  * ui-router.login
  *
  * @author Simon Emms <simon@simonemms.com>
- * @build 2015-11-03T07:42:01
+ * @build 2015-11-04T17:01:06
  * @description A module which simplifies the login process to an Angular project that uses ui-router
  * @license MIT
  */
@@ -12704,7 +12704,9 @@ exports["default"] = function () {
         return _this;
     };
 
-    this.$get = [authModule, "ipCookie", "$state", function ($authentication, ipCookie, $state) {
+    this.$get = ["$injector", "ipCookie", "$state", function ($injector, ipCookie, $state) {
+
+        "ngInject";
 
         if (_lodash._.isNull(defaultLoggedInState)) {
             throw new Error("loginProvider.defaultLoggedInState must be set");
@@ -12714,6 +12716,10 @@ exports["default"] = function () {
             throw new Error("loginProvider.fallbackState must be set");
         }
 
+        /* Load the dynamic authentication module */
+        var $authentication = $injector.get(authModule);
+
+        /* Return instance of the class */
         return new Login($authentication, ipCookie, $state);
     }];
 };
