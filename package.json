@@ -1,6 +1,6 @@
 {
   "name": "ui-router.login",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A module which simplifies the login process to an Angular project that uses ui-router",
   "main": "./dist/ui-router.login.min.js",
   "dependencies": {},
