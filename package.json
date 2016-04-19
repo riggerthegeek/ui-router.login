@@ -38,7 +38,7 @@
     "load-grunt-tasks": "^3.2.0",
     "lodash": "^3.10.0",
     "mocha": "^2.2.5",
-    "phantomjs": "^1.9.17",
+    "phantomjs-prebuilt": "^2.1.7",
     "semver": "^5.0.1",
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0"
