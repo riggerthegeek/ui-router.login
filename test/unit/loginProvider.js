@@ -200,7 +200,9 @@ describe("provider: $loginProvider", function () {
                     .calledWithExactly("mycookie");
 
                 expect(stateFactory.go).to.be.calledOnce
-                    .calledWithExactly("app.loggedin", {});
+                    .calledWithExactly("app.loggedin", {}, {
+                        reload: true
+                    });
 
             });
 
@@ -217,7 +219,9 @@ describe("provider: $loginProvider", function () {
                     .calledWithExactly("__loginData");
 
                 expect(stateFactory.go).to.be.calledOnce
-                    .calledWithExactly("app.loggedin", {});
+                    .calledWithExactly("app.loggedin", {}, {
+                        reload: true
+                    });
 
             });
 
@@ -236,7 +240,9 @@ describe("provider: $loginProvider", function () {
                     .calledWithExactly("__loginData");
 
                 expect(stateFactory.go).to.be.calledOnce
-                    .calledWithExactly("app.state", {});
+                    .calledWithExactly("app.state", {}, {
+                        reload: true
+                    });
 
             });
 
@@ -260,6 +266,8 @@ describe("provider: $loginProvider", function () {
                 expect(stateFactory.go).to.be.calledOnce
                     .calledWithExactly("app.state", {
                         hello: "world"
+                    }, {
+                        reload: true
                     });
 
             });
@@ -365,7 +373,9 @@ describe("provider: $loginProvider", function () {
                 expect($login.logout(true)).to.be.equal("promise");
 
                 expect(stateFactory.go).to.be.calledOnce
-                    .calledWithExactly("app.fallback");
+                    .calledWithExactly("app.fallback", {}, {
+                        reload: true
+                    });
 
                 expect(stateFactory.reload).to.not.be.called;
 
@@ -380,7 +390,9 @@ describe("provider: $loginProvider", function () {
                 expect($login.logout("app.newstate")).to.be.equal("promise");
 
                 expect(stateFactory.go).to.be.calledOnce
-                    .calledWithExactly("app.newstate");
+                    .calledWithExactly("app.newstate", {}, {
+                        reload: true
+                    });
 
                 expect(stateFactory.reload).to.not.be.called;
 
