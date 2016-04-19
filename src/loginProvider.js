@@ -123,7 +123,9 @@ export default function () {
             }
 
             /* Perform the redirect */
-            return this._$state.go(state, params);
+            return this._$state.go(state, params, {
+                reload: true
+            });
 
         }
 
@@ -171,10 +173,14 @@ export default function () {
 
             if (redirectState === true) {
                 /* Go to fallback state */
-                return this._$state.go(fallbackState);
+                return this._$state.go(fallbackState, {}, {
+                    reload: true
+                });
             } else if (_.isString(redirectState)) {
                 /* Go to specific state */
-                return this._$state.go(redirectState);
+                return this._$state.go(redirectState, {}, {
+                    reload: true
+                });
             } else {
                 /* Reload the page */
                 return this._$state.reload();
