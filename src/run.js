@@ -21,8 +21,18 @@ export default function ($rootScope, $state, $login) {
 
     $rootScope.$on("$stateChangeStart", (event, toState, toParams) => {
 
-        /* Ensure that pages that require a login actually have logged in */
-        let requireLogin = _.has(toState, ["data", "requireLogin"]) && toState.data.requireLogin === true;
+        /* Ensure that pages that require a login actually have logged in - ui.router inherits */
+        var requireLogin = false;
+
+        try {
+            let tmp = toState.data.requireLogin;
+
+            if (_.isBoolean(tmp)) {
+                requireLogin = tmp;
+            }
+        } catch (err) {
+            /* Ignore errors if param doesn't exist */
+        }
 
         if (requireLogin && $login.isLoggedIn() === false) {
 
