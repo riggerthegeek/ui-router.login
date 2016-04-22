@@ -2,7 +2,7 @@
  * ui-router.login
  *
  * @author Simon Emms <simon@simonemms.com>
- * @build 2016-04-22T14:40:08
+ * @build 2016-04-22T15:58:58
  * @description A module which simplifies the login process to an Angular project that uses ui-router
  * @license MIT
  */
@@ -12756,8 +12756,18 @@ exports["default"] = ["$rootScope", "$state", "$login", function ($rootScope, $s
 
     $rootScope.$on("$stateChangeStart", function (event, toState, toParams) {
 
-        /* Ensure that pages that require a login actually have logged in */
-        var requireLogin = _lodash._.has(toState, ["data", "requireLogin"]) && toState.data.requireLogin === true;
+        /* Ensure that pages that require a login actually have logged in - ui.router inherits */
+        var requireLogin = false;
+
+        try {
+            var tmp = toState.data.requireLogin;
+
+            if (_lodash._.isBoolean(tmp)) {
+                requireLogin = tmp;
+            }
+        } catch (err) {
+            /* Ignore errors if param doesn't exist */
+        }
 
         if (requireLogin && $login.isLoggedIn() === false) {
 
