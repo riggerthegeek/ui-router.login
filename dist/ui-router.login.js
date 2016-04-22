@@ -2,7 +2,7 @@
  * ui-router.login
  *
  * @author Simon Emms <simon@simonemms.com>
- * @build 2015-11-04T17:01:06
+ * @build 2016-04-22T14:40:08
  * @description A module which simplifies the login process to an Angular project that uses ui-router
  * @license MIT
  */
@@ -12532,7 +12532,9 @@ exports["default"] = function () {
                 }
 
                 /* Perform the redirect */
-                return this._$state.go(state, params);
+                return this._$state.go(state, params, {
+                    reload: true
+                });
             }
 
             /**
@@ -12581,10 +12583,14 @@ exports["default"] = function () {
 
                 if (redirectState === true) {
                     /* Go to fallback state */
-                    return this._$state.go(fallbackState);
+                    return this._$state.go(fallbackState, {}, {
+                        reload: true
+                    });
                 } else if (_lodash._.isString(redirectState)) {
                     /* Go to specific state */
-                    return this._$state.go(redirectState);
+                    return this._$state.go(redirectState, {}, {
+                        reload: true
+                    });
                 } else {
                     /* Reload the page */
                     return this._$state.reload();
