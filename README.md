@@ -46,7 +46,7 @@ In your route config, define your routes.  In this example, we have a global par
                 }, {
                     /* Any pages that do require authentication live here */
                     name: "private",
-                    abstract: true
+                    abstract: true,
                     data: {
                         requireLogin: true /* This is what tells it to require authentication */
                     },
