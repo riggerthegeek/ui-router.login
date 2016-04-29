@@ -140,7 +140,7 @@ three things:
 
 # Authentication Module
 
-This is a module that you define to handle your authentication.  We need access to two module, the "clear" method and
+This is a module that you define to handle your authentication.  We need access to two methods, the "clear" method and
 the "get" method.  There will also likely be other methods on that class (such as a "set" method), but this project
 isn't interested in those.
 
