@@ -9,7 +9,7 @@
 
 
 /* Third-party modules */
-import {_} from "lodash";
+import _ from "lodash";
 
 
 /* Files */
